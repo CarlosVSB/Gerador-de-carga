@@ -15,7 +15,7 @@ class bd(Thread):
         cursor.execute("insert into arquivos value {}".format(recebe)) 
         self.Sock.send("daijobu".encode())
 
-conexao = mysql.connect(host = 'localhost', user='root', passwd='gabriel123')
+conexao = mysql.connect(host = 'localhost', user='root', passwd='0000')
 cursor = conexao.cursor()
 cursor.execute('CREATE DATABASE IF NOT EXISTS Workload')
 cursor.execute('USE Workload')

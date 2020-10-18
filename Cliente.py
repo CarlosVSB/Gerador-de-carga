@@ -38,7 +38,6 @@ qtd = int(input("Qtd de arquivos enviados: "))
 taxa = int(input("Taxa de envio: "))
 FileGenerator(tam)
 message = open("archive.txt", "r")
-print(message.readlines())
 
 while cont < qtd:
     obj=Envio(ip,7000,message)
