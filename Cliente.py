@@ -1,4 +1,5 @@
 import socket
+from GeradorArquivo import FileGenerator
 from threading import Thread
 import time
 
@@ -9,16 +10,17 @@ import time
 
 
 class Envio(Thread):
-    def __init__(self,adress,port):
+    def __init__(self,adress,port,message):
         Thread.__init__(self)
         self.adress=adress
         self.port=port
+        self.message=message
     
     def run(self):
         addr = ((self.adress,self.port)) #define a tupla de endereco
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #AF_INET parametro para informar a familia do protocolo, SOCK_STREAM indica que eh TCP/IP
         client_socket.connect(addr) #realiza a conexao
-        mensagem = 'mensagem'
+        mensagem = self.message
         ini=time.time()
         print(ini)
         client_socket.send(mensagem.encode()) #envia mensagem
@@ -30,8 +32,16 @@ class Envio(Thread):
 
 cont=0
 
-while cont < 3:
-    obj=Envio("192.168.18.22",7000)
+ip = input("Digite o ip de conexao: ")
+tam  = int(input("Tamanho dos arquivos: "))
+qtd = int(input("Qtd de arquivos enviados: "))
+taxa = int(input("Taxa de envio: "))
+FileGenerator(tam)
+message = open("archive.txt", "r")
+print(message.readlines())
+
+while cont < qtd:
+    obj=Envio(ip,7000,message)
     obj.start()
-    time.sleep(1)
+    time.sleep(taxa)
     cont+=1
