@@ -1,7 +1,7 @@
 import socket
 from threading import Thread
 import time
-
+import mysql.connector as mysql
 
 class bd(Thread):
     def __init__(self,CSocket,Adress):
@@ -12,8 +12,17 @@ class bd(Thread):
 
     def run(self):
         recebe = self.Sock.recv(1024)
-        time.sleep(2)
+        cursor.execute("insert into arquivos value {}".format(recebe)) 
         self.Sock.send("daijobu".encode())
+
+conexao = mysql.connect(host = 'localhost', user='root', passwd='gabriel123')
+cursor = conexao.cursor()
+cursor.execute('CREATE DATABASE IF NOT EXISTS Workload')
+cursor.execute('USE Workload')
+cursor.execute("""CREATE TABLE IF NOT EXISTS `arquivos`
+                (
+                `arq` blob NOT NULL
+                )""")
 
 host = ''
 port = 7000
