@@ -4,5 +4,5 @@ def arquivo(tam):
     file = os.path.getsize ('archive.txt')
     while(file <= tam):
         arquivo = open("archive.txt", "a")
-        arquivo.write("Olá, mundo!\n")
+        arquivo.write("a\n")
         file = os.path.getsize ('archive.txt')
