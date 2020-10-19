@@ -23,6 +23,7 @@ class Envio(Thread):
         mensagem = self.message
         ini=time.time()
         print(ini)
+        print("-------MENSAGEM:",mensagem)
         client_socket.send(mensagem.encode()) #envia mensagem
         print(client_socket.recv(1024).decode())
         fim=time.time()
@@ -32,12 +33,15 @@ class Envio(Thread):
 
 cont=0
 
-ip = input("Digite o ip de conexao: ")
+ip = '127.0.0.1'
 tam  = int(input("Tamanho dos arquivos: "))
 qtd = int(input("Qtd de arquivos enviados: "))
 taxa = int(input("Taxa de envio: "))
 FileGenerator(tam)
-message = open("archive.txt", "r")
+
+arquivo = open("archive.txt", "r")
+message = str(arquivo.readlines()).strip('[]')
+
 
 while cont < qtd:
     obj=Envio(ip,7000,message)
