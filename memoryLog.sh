@@ -4,7 +4,7 @@
 # read timeExe
 # end=$((SECONDS+$timeExe))
 
-echo "tempo,       mem, livreMem, swap, livreSwap, cpu, disponivel" > dados.csv
+echo "tempo,       mem, livreMem, swap, livreSwap, cpu, disponivel" > 200kb.csv
 
 while : 
 do
@@ -18,7 +18,7 @@ do
     cpu=$(mpstat | grep all | cut -c21-27 | tr ',' '.')
     disponivel=$(free --mega| grep Mem | cut -c76-80)
     
-    echo "$SECONDS,   $mem, $livreMem, $swap, $livreSwap, $cpu, $disponivel" >> dados.csv
+    echo "$SECONDS,   $mem, $livreMem, $swap, $livreSwap, $cpu, $disponivel" >> 200kb.csv
     
     sleep 1
     

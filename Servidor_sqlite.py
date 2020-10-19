@@ -25,10 +25,13 @@ class bd(Thread):
                 pass
 
         loads = pickle.loads(data)
-        query = '''insert into arquivos(arq) values (%s);'''
-        tupla = (loads,)
-        cursor.execute(query, tupla)
+        print("TIPO: ",type(loads))
+        #query = '''insert into arquivos(arq) values {};'''.format(loads)
+        #tupla = (loads,)
+        conexao = sqlite.connect('Workload.db')
+        conexao.execute("""INSERT INTO arquivos (arq) VALUES (?) """, (memoryview(loads.encode()), ))
         conexao.commit()
+        conexao.close()
         self.Sock.send("daijobu".encode())
 
 
@@ -38,7 +41,7 @@ conexao.execute('''CREATE TABLE IF NOT EXISTS arquivos
                 (
                 arq BLOB NOT NULL
                 );''')
-
+conexao.close()
 
 host = ''
 port = 7000

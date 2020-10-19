@@ -38,7 +38,7 @@ taxa = 1
 #tam  = [200000,400000,600000,800000]
 #FileGenerator(tam)
 
-arquivo = open("archive5.txt", "r")
+arquivo = open("archive1.txt", "r")
 message = str(arquivo.readlines()).strip('[]')
 tempos = []
 while cont < qtd:
