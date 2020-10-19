@@ -2,7 +2,7 @@ import socket
 from GeradorArquivo import FileGenerator
 from threading import Thread
 import time
-
+import pickle
 
 # ip = input('digite o ip de conexao: ')
 # print(type(ip))
@@ -20,11 +20,11 @@ class Envio(Thread):
         addr = ((self.adress,self.port)) #define a tupla de endereco
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #AF_INET parametro para informar a familia do protocolo, SOCK_STREAM indica que eh TCP/IP
         client_socket.connect(addr) #realiza a conexao
-        mensagem = self.message
+        mensagem = pickle.dumps(self.message)
         ini=time.time()
         print(ini)
         print("-------MENSAGEM:",mensagem)
-        client_socket.send(mensagem.encode()) #envia mensagem
+        client_socket.sendall(mensagem) #envia mensagem
         print(client_socket.recv(1024).decode())
         fim=time.time()
         print(fim)
