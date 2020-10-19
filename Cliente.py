@@ -10,11 +10,12 @@ import pickle
 
 
 class Envio(Thread):
-    def __init__(self,adress,port,message):
+    def __init__(self,adress,port,message,tempos):
         Thread.__init__(self)
         self.adress=adress
         self.port=port
         self.message=message
+        self.tempos=tempos
     
     def run(self):
         addr = ((self.adress,self.port)) #define a tupla de endereco
@@ -22,29 +23,29 @@ class Envio(Thread):
         client_socket.connect(addr) #realiza a conexao
         mensagem = pickle.dumps(self.message)
         ini=time.time()
-        print(ini)
-        print("-------MENSAGEM:",mensagem)
         client_socket.sendall(mensagem) #envia mensagem
-        print(client_socket.recv(1024).decode())
+        client_socket.recv(1024).decode()
         fim=time.time()
-        print(fim)
-        print ('RTT:',fim-ini)
+        #print (fim-ini)
+        self.tempos.append(fim-ini)
         client_socket.close() #fecha conexao
 
 cont=0
 
 ip = '127.0.0.1'
-tam  = int(input("Tamanho dos arquivos: "))
-qtd = int(input("Qtd de arquivos enviados: "))
-taxa = int(input("Taxa de envio: "))
-FileGenerator(tam)
+qtd = 100
+taxa = 1
+#tam  = [200000,400000,600000,800000]
+#FileGenerator(tam)
 
-arquivo = open("archive.txt", "r")
+arquivo = open("archive5.txt", "r")
 message = str(arquivo.readlines()).strip('[]')
-
-
+tempos = []
 while cont < qtd:
-    obj=Envio(ip,7000,message)
+
+    obj=Envio(ip,7000,message,tempos)
     obj.start()
     time.sleep(taxa)
     cont+=1
+
+print('SOMA: ',sum(tempos)/100)

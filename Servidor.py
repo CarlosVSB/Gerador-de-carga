@@ -36,7 +36,7 @@ cursor.execute('CREATE DATABASE IF NOT EXISTS Workload')
 cursor.execute('USE Workload')
 cursor.execute("""CREATE TABLE IF NOT EXISTS `arquivos`
                 (
-                `arq` blob NOT NULL
+                `arq` mediumblob NOT NULL
                 )""")
 
 host = ''
